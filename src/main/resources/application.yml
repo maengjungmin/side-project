@@ -1,0 +1,83 @@
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1GB
+      max-request-size: 1GB
+  datasource:
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20
+      idle-timeout: 10000
+  jpa:
+    open-in-view: false
+    #DB 대소문자 구분 시 @Table, @Column 에 입력한 name 으로 쿼리 전송 정책, DB가 대소문자 구분 때 추가
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    #Hibernate 6에서는 더 이상 구성 속성을 사용하여 방언을 명시적으로 지정할 필요가 없다.
+    #https://docs.jboss.org/hibernate/orm/6.3/userguide/html_single/Hibernate_User_Guide.html#database-dialect
+    #    database-platform: org.hibernate.dialect.OracleDialect
+    #namedNativeQuery 사용 시 추가
+  application:
+    name: sideProjectApi
+
+server:
+  port: 9272
+  error:
+    path: /error
+  servlet:
+    context-path: /side-project-api
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+springdoc: #https://springdoc.org/properties.html
+  api-docs:
+    path: /api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    display-request-duration: true
+    doc-expansion: none #하위 operation 닫은 상태로 초기화
+    display-operation-id: true
+    filter: true
+jwt:
+  auth-key: side.project.key
+jasypt:
+  key: side-project-key
+rsa:
+  algorithm: RSA
+  key-size: 2048
+  private: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQClx0yoW7873aiivf4ymM5mz0RdikjlyzBg8wJ7PGLP8EVr/Zwns/SWaHlaIJRodgKTkBPK+lq6p8XOtwBB5gSHUKUANb11FHLna3mzINrH4+nO2s4vsYvX8D/VcuweF1g7FhYPoODpuQEgwvi0r3Zdnz4Cn68AFp37/lDDPlS6QdVErLRens9WzCLXphTfYMNZ5PZ/WdYcyR0152kNtq3vNuczcIezuBDf8t+OwdKUcWO+V8JGCw3LnrAFxIl2CrUluexhAoUX4n1Bb9N9iYzEwyd6QURvMtuKDEnd/fwehOJ7IiGOa88TG6ADQK4k/1B+TJLHbw0MfUibmPumaicrAgMBAAECggEALllJWmzES6WOZ2m9L0I/usjKMWjfNrgXX5OxpujcK4zeq/Gs/gC3KnItM4CWXZpY4A7RKdfTFAqiKEhL3yDDNV3bs/JSdPBxq7gFv4o5ANf836OXMAhws7/s6O2HjGY0ediT9GyjVVUvNoysYkAIVOaXvL4OfHTWWMTiqaO8ppIb3WFw50nCbhu8oef+vXS8oiOw5zV7S0fPdOQ+uUWtLUsw9lLsgGj2YpZGevUjP36SO32+DMGr9kcg+U6ZJHBjycqCGPh4AkE7PG3Xp+0yAyjWrCLxOvgJe/CCy4URPkud2xsrzXpEC7XtKm1OYag+NCUj69CsI3Xo7b6rc7QXWQKBgQC/LoYoRrrSx9wfaFlLGppiNekLL+3u76Y7Z0Vf1dfFbE+HdUtq8YCs57fY4dFdDScYkFU1jtp2rQYadXI1Ze8AvDkKUd5+bAX5r1SSBSzSRM/CS1ewe0FhB0C5scaveJ/ysP82YQbG2mKGUDdrskbD7+EcAZE8sQ1SOmIqBNmjrQKBgQDd++v5haCl1sprcZUfpS29TGKYYHKIUCW8ZUcoHbJODoQWv5Xrtsf8Crg5TheP/uONDfWsoi44FgQpTnAb/qZ+mvVddnrmtVg9IZCZ7VHfnf3ZKT7QISMrPKTvhyFsX0xWdMUkpaWA2hgqDhiMDPGVK9wkrUvXFu8yDpB1FB+RNwKBgG5k2/zX0rsxwu6z35PZmboKLTZTh83HvjJhEJMlNQH/5/BtD46CQ24UI3nt82oK1T9+4GUbxxRuFq8ikD87TAYdqcZGvfY8RDsIPgpPSLFmIJ2tycXTdk4j1QElIXhja+DEyanJ3xLmOawbF9VtTSWJF3CHiykDh5Cqu9JNmKrFAoGAVRJi0PGhK20xjhOtbr9C1DUd4/+yZQMyMw0tQ/Z9iuSNQpqRvhACfFkvWObQqOKqGjirWkmdJOlrFtl0pYXmEMcaGYN6fkgpVOQ0IomMwwItcrgX1nOcoslO/GzxJjMvckK1+uFwl/z9HcDhL2sWenCgoX24funPKYPjYLshjekCgYBPG2iAb6tf0pE3g97xTbLreLASanYMLRKDtw4L2Tzr1RJ8zo2o1KHtUrvqGwo3o8Sbt8hZuZWSW/YeQ8CfVngCDS5RRx7adPmPLKhq38h0YO0YY9odTl/Gym6X/12ycI6LT7UPSmTKZtJH2MZl/Ehr3nC7SDOB/XCT9NBsw4b7DQ==
+  public: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApcdMqFu/O92oor3+MpjOZs9EXYpI5cswYPMCezxiz/BFa/2cJ7P0lmh5WiCUaHYCk5ATyvpauqfFzrcAQeYEh1ClADW9dRRy52t5syDax+PpztrOL7GL1/A/1XLsHhdYOxYWD6Dg6bkBIML4tK92XZ8+Ap+vABad+/5Qwz5UukHVRKy0Xp7PVswi16YU32DDWeT2f1nWHMkdNedpDbat7zbnM3CHs7gQ3/LfjsHSlHFjvlfCRgsNy56wBcSJdgq1JbnsYQKFF+J9QW/TfYmMxMMnekFEbzLbigxJ3f38HoTieyIhjmvPExugA0CuJP9QfkySx28NDH1Im5j7pmonKwIDAQAB
+password:
+  cycle: 30 #dsys
+  locked: 3 #로그인 잠김 횟수햐
+logging:
+  config: classpath:logback/logback-spring.xml
+
+--- #develop
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: "jdbc:postgresql://3.34.194.45:5432/side_db"
+    driver-class-name: "org.postgresql.Driver"
+    username: admin
+    password: ENC(0NvPiECBlERfPqyuFF0CKj/S8/jsNzEu)
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: public
